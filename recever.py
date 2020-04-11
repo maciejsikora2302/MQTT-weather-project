@@ -22,6 +22,8 @@ client.on_message = on_messege
 
 client.connect(brooker)
 client.subscribe("test_topic")
-client.loop_start()
-time.sleep(100)
-client.loop_stop()
+try:
+    while True:
+        client.loop_start()
+finally:
+    client.loop_stop()
