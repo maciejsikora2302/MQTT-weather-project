@@ -1,5 +1,9 @@
+#mqtt client import
 import paho.mqtt.client as mqtt
-import time
+import weather_api
+# importlib.import_module("weather_api")
+
+# def get_daily
 
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
@@ -12,6 +16,9 @@ def on_log(client, userdata, level, buf):
 def on_messege(client, userdata, msg):
     decoded = msg.payload.decode("utf-8")
     print(f"Message I received -> Topic: {msg.topic}, Message: {decoded}")
+
+
+weather_api.get_info_form_year(2019)
 
 brooker = "127.0.0.1"
 client = mqtt.Client("sender")
