@@ -1,7 +1,15 @@
 #mqtt client import
-import paho.mqtt.client as mqtt
 import weather_api
+import paho.mqtt.client as mqtt
 import time
+import json
+import requests
+
+def get_json_from_imgw():
+    site = "https://danepubliczne.imgw.pl/api/data/synop/id/12566"
+    r = requests.get(site)
+    d = json.loads(r.text)
+    return d
 
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
@@ -27,10 +35,16 @@ client.connect(brooker)
 try:
     while True:
         client.loop_start()
-        msg = weather_api.get_avg_tmps_form_year(2018)
-        msg += weather_api.get_avg_tmps_form_year(2019)
-        msg += weather_api.get_avg_tmps_form_year(2020)
-        client.publish("test_topic", msg)
-        time.sleep(120)
+        record = get_json_from_imgw()
+        date = record["data_pomiaru"] + ";" + record["godzina_pomiaru"] + ";"
+        msg = date + record["temperatura"]
+        client.publish("krakow/temp", msg)
+        msg = date + record["predkosc_wiatru"]
+        client.publish("krakow/wind", msg)
+        msg = date + record["cisnienie"]
+        client.publish("krakow/press", msg)
+        msg = date + record["suma_opadu"]
+        client.publish("krakow/rain", msg)
+        time.sleep(5)
 finally:
     client.loop_stop()

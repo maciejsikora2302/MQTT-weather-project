@@ -21,7 +21,10 @@ client.on_log = on_log
 client.on_message = on_messege
 
 client.connect(brooker)
-client.subscribe("test_topic")
+client.subscribe("krakow/temp")
+client.subscribe("krakow/wind")
+client.subscribe("krakow/press")
+client.subscribe("krakow/rain")
 try:
     while True:
         client.loop_start()
