@@ -45,6 +45,6 @@ try:
         client.publish("krakow/press", msg)
         msg = date + record["suma_opadu"]
         client.publish("krakow/rain", msg)
-        time.sleep(5)
+        time.sleep(3600)
 finally:
     client.loop_stop()
