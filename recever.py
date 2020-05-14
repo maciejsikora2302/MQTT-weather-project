@@ -16,6 +16,8 @@ def on_messege(client, userdata, msg):
 brooker = "127.0.0.1"
 client = mqtt.Client("recever")
 
+print("Git test")
+
 client.on_connect = on_connect
 client.on_log = on_log
 client.on_message = on_messege
