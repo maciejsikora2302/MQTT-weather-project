@@ -36,15 +36,32 @@ try:
     while True:
         client.loop_start()
         record = get_json_from_imgw()
-        date = record["data_pomiaru"] + ";" + record["godzina_pomiaru"] + ";"
+        date = record["data_pomiaru"] + " " + record["godzina_pomiaru"]
         msg = date + record["temperatura"]
+        print(msg)
         client.publish("krakow/temp", msg)
         msg = date + record["predkosc_wiatru"]
+        print(msg)
         client.publish("krakow/wind", msg)
         msg = date + record["cisnienie"]
+        print(msg)
         client.publish("krakow/press", msg)
         msg = date + record["suma_opadu"]
+        print(msg)
         client.publish("krakow/rain", msg)
+
+        #format dla bazy - nie chciałem usuwać tego co napisałeś wcześniej
+
+        msg = "{'date': '" + record["data_pomiaru"]
+        msg += "', 'hour': " + record["godzina_pomiaru"]
+        msg += ", 'temp': " + record["temperatura"]
+        msg += ", 'wind': " + record["predkosc_wiatru"]
+        msg += ", 'press': " + record["cisnienie"]
+        msg += ", 'rain': " + record["suma_opadu"] + "}"
+        print(msg)
+        client.publish("krakow/fillDatabase", msg)
+
         time.sleep(3600)
 finally:
     client.loop_stop()
+
