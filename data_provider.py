@@ -50,7 +50,8 @@ try:
         print(msg)
         client.publish("krakow/rain", msg)
 
-        #format dla bazy - nie chciałem usuwać tego co napisałeś wcześniej
+        # wiadomość dla bazy - nie chciałem usuwać tego co napisałeś wcześniej
+        # format np: "{"date": "2020-05-15", "hour": 14, "temp": 8.6, "wind": 3, "press": 1016.4, "rain": 1.4}"
 
         msg = "{'date': '" + record["data_pomiaru"]
         msg += "', 'hour': " + record["godzina_pomiaru"]

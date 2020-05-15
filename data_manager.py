@@ -7,6 +7,18 @@ import ast
 db = TinyDB('db.json')
 query = Query()
 
+def search_equal(type, value):
+    print(db.search(query[type] == value))
+
+def search_greater(type, value):
+    print(db.search(query[type] > value))
+
+def search_lower(type, value):
+    print(db.search(query[type] < value))
+
+def search_in_range(type, lower, higher):
+    print(db.search((lower < query[type]) & (query[type] < higher)))
+
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
         print("I manage to connect to server")
@@ -35,12 +47,16 @@ client.on_connect = on_connect
 client.on_log = on_log
 client.on_message = on_messege
 
+subTypes = ["temp", "wind", "press", "rain", "fillDatabase"]
+
+timePeriods = ["day", "week", "month", "year"]
+
 client.connect(brooker)
-client.subscribe("krakow/temp")
-client.subscribe("krakow/wind")
-client.subscribe("krakow/press")
-client.subscribe("krakow/rain")
-client.subscribe("krakow/fillDatabase")
+
+for dataType in subTypes:
+    client.subscribe(f"krakow/{dataType}")
+
+client.subscribe("requestdata")
 
 try:
     while True:
