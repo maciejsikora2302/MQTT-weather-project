@@ -59,6 +59,6 @@ def run_all():
     get_middle_info("press",2,6)
     get_middle_info("rain",1,5)
 
-# run_all()
+run_all()
 
 # all methods worked as expected

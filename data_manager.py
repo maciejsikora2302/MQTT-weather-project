@@ -8,16 +8,28 @@ db = TinyDB('db.json')
 query = Query()
 
 def search_equal(type, value):
-    print(db.search(query[type] == value))
+    result = str(db.search(query[type] == value))
+    if(len(result)) < 5:
+        return ""
+    return result
 
 def search_greater(type, value):
-    print(db.search(query[type] > value))
+    result = str(db.search(query[type] > value))
+    if(len(result)) < 5:
+        return ""
+    return result
 
 def search_lower(type, value):
-    print(db.search(query[type] < value))
+    result = str(db.search(query[type] < value))
+    if(len(result)) < 5:
+        return ""
+    return result
 
 def search_in_range(type, lower, higher):
-    print(db.search((lower < query[type]) & (query[type] < higher)))
+    result = str(db.search((lower <= query[type]) & (query[type] <= higher)))
+    if(len(result)) < 5:
+        return ""
+    return result
 
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
@@ -39,6 +51,29 @@ def on_messege(client, userdata, msg):
             print("Inserted")
         else:
             print("Already exists")
+    
+    if msg.topic[0:10] == 'visualizer':
+        if msg.topic[11:15] == 'day':
+            day = decoded
+            print(day)
+
+        elif msg.topic[11:16] == 'week':
+            lower = decoded[0:10]
+            higher = decoded[11:21]
+            result = search_in_range("date",lower,higher)
+            print(result)
+            
+        elif msg.topic[11:17] == 'month':
+            lower = decoded[0:10]
+            higher = decoded[11:21]
+            result = search_in_range("date",lower,higher)
+            print(result)
+
+        elif msg.topic[11:16] == 'year':
+            lower = decoded[0:10]
+            higher = decoded[11:21]
+            result = search_in_range("date",lower,higher)
+            print(result)
 
 brooker = "127.0.0.1"
 client = mqtt.Client("data_manager")
