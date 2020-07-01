@@ -7,12 +7,12 @@ db = TinyDB('db.json')
 query = Query()
 
 def insert_test_data():
-    db.insert({"date": "2020-05-15", "hour": 8, "temp": 9.8, "wind": 5, "press": 1015.8, "rain": 1.4})
-    db.insert({"date": "2020-05-15", "hour": 9, "temp": 9.8, "wind": 5, "press": 1015.8, "rain": 1.4}) 
-    db.insert({"date": "2020-05-15", "hour": 10, "temp": 9.8, "wind": 5, "press": 1015.8, "rain": 1.4})
-    db.insert({"date": "2020-05-16", "hour": 8, "temp": 9.8, "wind": 5, "press": 1015.8, "rain": 1.4})
-    db.insert({"date": "2020-05-16", "hour": 9, "temp": 9.8, "wind": 5, "press": 1015.8, "rain": 1.4})
-    db.insert({"date": "2020-05-16", "hour": 10, "temp": 9.8, "wind": 5, "press": 1015.8, "rain": 1.4})
+    db.insert({"date": "2020-01-01", "hour": 8, "temp": 9.8, "wind": 5, "press": 1015.8, "rain": 1.4})
+    db.insert({"date": "2020-01-01", "hour": 9, "temp": 9.8, "wind": 5, "press": 1015.8, "rain": 1.4}) 
+    db.insert({"date": "2020-01-01", "hour": 10, "temp": 9.8, "wind": 5, "press": 1015.8, "rain": 1.4})
+    db.insert({"date": "2019-12-31", "hour": 8, "temp": 9.8, "wind": 5, "press": 1015.8, "rain": 1.4})
+    db.insert({"date": "2019-12-31", "hour": 9, "temp": 9.8, "wind": 5, "press": 1015.8, "rain": 1.4})
+    db.insert({"date": "2019-12-31", "hour": 10, "temp": 9.8, "wind": 5, "press": 1015.8, "rain": 1.4})
 
 def get_info(type, condition):
     print(f"EQUAL Type {type}, condition {condition}")
@@ -35,10 +35,10 @@ def run_all():
 
     get_info("date","2020-05-15")
     print("date test1")
-    get_lower_info("date","2020-05-14")
-    get_greater_info("date","2020-05-14")
-    get_lower_info("date","2020-05-16")
-    get_greater_info("date","2020-05-16")
+    get_lower_info("date","2020-01-02")
+    get_greater_info("date","2020-01-02")
+    get_lower_info("date","2019-12-31")
+    get_greater_info("date","2019-12-31")
     print("date test2")
     get_lower_info("date","2021")
     get_greater_info("date","2021")
