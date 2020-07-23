@@ -1,28 +1,27 @@
-import paho.mqtt.client as mqtt
+from guietta import Gui, M, ___, III, VS, Ax, _
 
-def on_connect(client, userdata, flags, rc):
-    if rc == 0:
-        print("I manage to connect to server")
-    else:
-        print("Something went wrong with connecting, rc = ", rc)
-def on_log(client, userdata, level, buf):
-    print("Log: ", buf)
+gui = Gui(
 
-def on_messege(client, userdata, msg):
-    decoded = msg.payload.decode("utf-8")
-    print(f"Message I received -> Topic: {msg.topic}, Message: {decoded}")
+  [  M('plot') , ___ ,  ___ , VS('slider') ],
+  [     III    , III ,  III ,     III      ],
+  [     III    , III ,  III ,     III      ],
+  [     III    , III ,  III ,  '^^^ Move the slider'  ],
+ )
 
-brooker = "127.0.0.1"
-client = mqtt.Client("visualizer")
+import numpy as np
 
-client.on_connect = on_connect
-client.on_log = on_log
-client.on_message = on_messege
+def replot(gui, value):
 
-client.connect(brooker)
+    with Ax(gui.plot) as ax:
+        ax.set_title('y=tan(x)')
+        t = np.linspace(0, 1+value/10, 500)
+        ax.plot(t, np.tan(t), ".-")
 
-try:
-    while True:
-        client.loop_start()
-finally:
-    client.loop_stop()
+gui.events(
+
+    [  _            ,  _ , _ ,   replot     ],
+    [  _            ,  _ , _ ,   _          ],
+    [  _            ,  _ , _ ,   _          ], )
+
+replot(gui, 1)
+gui.run()
