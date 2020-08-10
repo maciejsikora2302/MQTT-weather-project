@@ -13,15 +13,18 @@ def get_datatype_and_dates(gui):
         raise ValueError
 
     # TODO zapewnić poprawność dat
-    #format rrrr/mm/dd
+    #format rrrr-mm-dd
+    
+    separator = "-"
+    
     start_date = ""
-    start_date += gui.Year1 + "/"
-    start_date += gui.Month1 + "/"
+    start_date += gui.Year1 + separator
+    start_date += gui.Month1 + separator
     start_date += gui.Day1
 
     end_date = ""
-    end_date += gui.Year2 + "/"
-    end_date += gui.Month2 + "/"
+    end_date += gui.Year2 + separator
+    end_date += gui.Month2 + separator
     end_date += gui.Day2
 
     try:
