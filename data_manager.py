@@ -7,6 +7,11 @@ import ast
 db = TinyDB('db.json')
 query = Query()
 
+# TODO:
+def aggregate_day_average(target):
+    nothingForNow = 0
+    return nothingForNow
+
 def search_equal(type, value):
     result = str(db.search(query[type] == value))
     if(len(result)) < 5:
@@ -51,29 +56,36 @@ def on_messege(client, userdata, msg):
             print("Inserted")
         else:
             print("Already exists")
+
+    if msg.topic == '': # nazwa publishera (operator?)
+        lower = decoded[0:10]
+        higher = decoded[11:21]
+        result = search_in_range("date",lower,higher)
+        print(result)
+        client.publish("data",result)
     
-    if msg.topic[0:10] == 'visualizer':
-        if msg.topic[11:15] == 'day':
-            day = decoded
-            print(day)
+    # if msg.topic[0:10] == 'visualizer':
+    #     if msg.topic[11:15] == 'day':
+    #         day = decoded
+    #         print(day)
 
-        elif msg.topic[11:16] == 'week':
-            lower = decoded[0:10]
-            higher = decoded[11:21]
-            result = search_in_range("date",lower,higher)
-            print(result)
+    #     elif msg.topic[11:16] == 'week':
+    #         lower = decoded[0:10]
+    #         higher = decoded[11:21]
+    #         result = search_in_range("date",lower,higher)
+    #         print(result)
             
-        elif msg.topic[11:17] == 'month':
-            lower = decoded[0:10]
-            higher = decoded[11:21]
-            result = search_in_range("date",lower,higher)
-            print(result)
+    #     elif msg.topic[11:17] == 'month':
+    #         lower = decoded[0:10]
+    #         higher = decoded[11:21]
+    #         result = search_in_range("date",lower,higher)
+    #         print(result)
 
-        elif msg.topic[11:16] == 'year':
-            lower = decoded[0:10]
-            higher = decoded[11:21]
-            result = search_in_range("date",lower,higher)
-            print(result)
+    #     elif msg.topic[11:16] == 'year':
+    #         lower = decoded[0:10]
+    #         higher = decoded[11:21]
+    #         result = search_in_range("date",lower,higher)
+    #         print(result)
 
 brooker = "127.0.0.1"
 client = mqtt.Client("data_manager")

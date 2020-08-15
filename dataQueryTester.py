@@ -14,24 +14,30 @@ def insert_test_data():
     db.insert({"date": "2019-12-31", "hour": 9, "temp": 9.8, "wind": 5, "press": 1015.8, "rain": 1.4})
     db.insert({"date": "2019-12-31", "hour": 10, "temp": 9.8, "wind": 5, "press": 1015.8, "rain": 1.4})
 
+# result's type is str
+
 def get_info(type, condition):
     print(f"EQUAL Type {type}, condition {condition}")
-    print(db.search(query[type] == condition))
+    result = db.search(query[type] == condition)
+    print(result)
 
 def get_greater_info(type, condition):
     print(f"GREATER Type {type}, condition {condition}")
-    print(db.search(query[type] > condition))
+    result = db.search(query[type] > condition)
+    print(result)
 
 def get_lower_info(type, condition):
     print(f"LOWER Type {type}, condition {condition}")
-    print(db.search(query[type] < condition))
+    result = db.search(query[type] < condition)
+    print(result)
 
 def get_middle_info(type, lower, higher):
     print(f"MIDDLE Type {type}, lower {lower} ,higher {higher}")
-    print(db.search((lower < query[type]) & (query[type] < higher)))
+    result = db.search((lower < query[type]) & (query[type] < higher))
+    print(result)
 
 def run_all():
-    insert_test_data()
+    # insert_test_data()
 
     get_info("date","2020-05-15")
     print("date test1")
