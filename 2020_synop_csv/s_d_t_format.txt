@@ -1,0 +1,26 @@
+Kod stacji                                           9
+Nazwa stacji                                        30
+Rok                                                  4
+Miesiąc                                              2
+Dzień                                                2
+Średnie dobowe zachmurzenie ogólne [oktanty]         6/1
+Status pomiaru NOS                                   1
+Średnia dobowa prędkość wiatru [m/s]                 6/1
+Status pomiaru FWS                                   1
+Średnia dobowa temperatura [°C]                      5/1
+Status pomiaru TEMP                                  1
+Średnia dobowe ciśnienie pary wodnej [hPa]           5/1
+Status pomiaru CPW                                   1
+Średnia dobowa wilgotność względna [%]               8/1
+Status pomiaru WLGS                                  1
+Średnia dobowe ciśnienie na poziomie stacji [hPa]    7/1
+Status pomiaru PPPS                                  1
+Średnie dobowe ciśnienie na pozimie morza [hPa]      7/1
+Status pomiaru PPPM                                  1
+Suma opadu dzień  [mm]                               8/1
+Status pomiaru WODZ                                  1
+Suma opadu noc   [mm]                                8/1
+Status pomiaru WONO                                  1
+
+Status "8" brak pomiaru
+Status "9" brak zjawiska
