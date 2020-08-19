@@ -60,7 +60,7 @@ def on_messege(client, userdata, msg):
 
     if msg.topic == 'krakow/fillDatabase':
         newDict = ast.literal_eval(decoded)
-        print(type(newDict))
+        print(newDict)
         if not db.contains((query.date == newDict.get("date")) & (query.hour == newDict.get("hour"))):
             db.insert(newDict)
             print("Inserted")
