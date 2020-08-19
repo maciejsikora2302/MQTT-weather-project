@@ -3,14 +3,24 @@ import time
 from tinydb import TinyDB, Query
 import json
 import ast
+import csv
 
 db = TinyDB('db.json')
 query = Query()
 
 # TODO:
-def aggregate_day_average(target):
-    nothingForNow = 0
-    return nothingForNow
+# def aggregate_day_average(target):
+#     nothingForNow = 0
+#     return nothingForNow
+
+def sth():
+    with open('2020_synop_csv/s_d_t_01_2020.csv', newline='') as csvfile:
+        fieldNames = ['number','city','year','month','day','cloud','NOS','wind','FWS','temp','TEMP','pressW','CPW','moisture','WLGS','press','PPPS','pressSea','PPPM','rainDay','WODZ','rainNight','WONO']
+        sdtreader = csv.DictReader(csvfile,fieldnames=fieldNames)
+        for row in sdtreader:
+            print(row['number'], row['wind'], row['press'])
+            word = row['press']
+            print(type(word),type(row))
 
 def search_equal(type, value):
     result = str(db.search(query[type] == value))
