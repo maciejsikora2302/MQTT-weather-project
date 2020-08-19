@@ -57,7 +57,7 @@ def get_lower_info(type, condition):
 
 def get_middle_info(type, lower, higher):
     print(f"MIDDLE Type {type}, lower {lower} ,higher {higher}")
-    result = db.search((lower < query[type]) & (query[type] < higher))
+    result = db.search((lower <= query[type]) & (query[type] <= higher))
     print(result)
 
 def run_all():
@@ -67,6 +67,7 @@ def run_all():
     get_lower_info("date","2020-01-02")
     get_greater_info("date","2020-07-22")
     get_lower_info("date","2019-12-31")
+    get_middle_info("date","2020-07-12","2020-07-22")
     # get_greater_info("date","2019-12-31")
     # print("date test2")
     # get_lower_info("date","2021")
