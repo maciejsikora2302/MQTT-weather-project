@@ -51,8 +51,24 @@ def on_connect(client, userdata, flags, rc):
         print("I manage to connect to server")
     else:
         print("Something went wrong with connecting, rc = ", rc)
+
 def on_log(client, userdata, level, buf):
     print("Log: ", buf)
+
+def get_result(decoded):
+    status_file = open("status.txt","w")
+    status_file.write("filling")
+    status_file.close()
+
+    lower = decoded[0:10]
+    higher = decoded[11:21]
+    result = search_in_range("date",lower,higher)
+    return result
+
+def status_finished():
+    status_file = open("status.txt","w")
+    status_file.write("ready")
+    status_file.close()
 
 def on_messege(client, userdata, msg):
     decoded = msg.payload.decode("utf-8")
@@ -67,23 +83,46 @@ def on_messege(client, userdata, msg):
         else:
             print("Already exists")
 
-    if msg.topic == '': # nazwa publishera (operator?)
-        status_file = open("status.txt","w")
-        status_file.write("filling")
-        status_file.close()
+    if msg.topic == 'gui_request/rain':
+        result = get_result(decoded)
 
-        lower = decoded[0:10]
-        higher = decoded[11:21]
-        result = search_in_range("date",lower,higher)
-
-        result_file = open("result_file.txt","w")
+        result_file = open("result_file.csv","w")
         for row in result:
-            result_file.write(str(row)+"\n")
+            result_file.write('"'+row["date"]+'",'+str(row["rain"])+"\n")
         result_file.close()
 
-        status_file = open("status.txt","w")
-        status_file.write("ready")
-        status_file.close()
+        status_finished()
+
+    if msg.topic == 'gui_request/temp':
+        result = get_result(decoded)
+
+        result_file = open("result_file.csv","w")
+        for row in result:
+            result_file.write('"'+row["date"]+'",'+str(row["temp"])+"\n")
+        result_file.close()
+
+        status_finished()
+
+    if msg.topic == 'gui_request/press':
+        result = get_result(decoded)
+
+        result_file = open("result_file.csv","w")
+        for row in result:
+            result_file.write('"'+row["date"]+'",'+str(row["press"])+"\n")
+        result_file.close()
+
+        status_finished()
+
+    if msg.topic == 'gui_request/wind':
+        result = get_result(decoded)
+
+        result_file = open("result_file.csv","w")
+        for row in result:
+            result_file.write('"'+row["date"]+'",'+str(row["wind"])+"\n")
+        result_file.close()
+
+        status_finished()
+
         # client.publish("data",result)
     
     # if msg.topic[0:10] == 'visualizer':

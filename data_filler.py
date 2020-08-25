@@ -27,8 +27,8 @@ def fill(filename):
 
 filenames = ['s_d_t_01_2020.csv','s_d_t_02_2020.csv','s_d_t_03_2020.csv','s_d_t_04_2020.csv','s_d_t_05_2020.csv','s_d_t_06_2020.csv','s_d_t_07_2020.csv']
 
-for filename in filenames:
-    fill(filename)
+# for filename in filenames:
+#     fill(filename)
 
 # def insert_test_data():
 #     db.insert({"date": "2020-01-01", "hour": 8, "temp": 9.8, "wind": 5, "press": 1015.8, "rain": 1.4})
@@ -58,20 +58,43 @@ def get_lower_info(type, condition):
 def get_middle_info(type, lower, higher):
     print(f"MIDDLE Type {type}, lower {lower} ,higher {higher}")
     result = db.search((lower <= query[type]) & (query[type] <= higher))
-    # print(result)
-    result_file = open("result_file.txt","w")
-    for row in result:
-        result_file.write(str(row)+"\n")
-    result_file.close()
+    return result
+
+def get_result(decoded):
+    status_file = open("status.txt","w")
+    status_file.write("filling")
+    status_file.close()
+
+    lower = decoded[0:10]
+    higher = decoded[11:21]
+    print(lower+"\n")
+    print(higher+"\n\n\n")
+    result = get_middle_info("date",lower,higher)
+    return result
+
+def status_finished():
+    status_file = open("status.txt","w")
+    status_file.write("ready")
+    status_file.close()
+
+
 
 def run_all():
 
-    get_info("date","2020-05-11")
-    print("date test1")
-    get_lower_info("date","2020-01-02")
-    get_greater_info("date","2020-07-22")
-    get_lower_info("date","2019-12-31")
-    get_middle_info("date","2020-07-12","2020-07-22")
+    # get_info("date","2020-05-11")
+    # print("date test1")
+    # get_lower_info("date","2020-01-02")
+    # get_greater_info("date","2020-07-22")
+    # get_lower_info("date","2019-12-31")
+    result = get_result("2020-07-12 2020-07-22")
+
+    result_file = open("result_file.csv","w")
+    for row in result:
+        result_file.write('"'+row["date"]+'",'+str(row["rain"])+','+str(row["wind"])+','+str(row["temp"])+','+str(row["press"])+"\n")
+    result_file.close()
+
+    status_finished()
+
     # get_greater_info("date","2019-12-31")
     # print("date test2")
     # get_lower_info("date","2021")
