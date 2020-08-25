@@ -68,13 +68,22 @@ def on_messege(client, userdata, msg):
             print("Already exists")
 
     if msg.topic == '': # nazwa publishera (operator?)
+        status_file = open("status.txt","w")
+        status_file.write("filling")
+        status_file.close()
+
         lower = decoded[0:10]
         higher = decoded[11:21]
         result = search_in_range("date",lower,higher)
+
         result_file = open("result_file.txt","w")
         for row in result:
             result_file.write(str(row)+"\n")
         result_file.close()
+
+        status_file = open("status.txt","w")
+        status_file.write("ready")
+        status_file.close()
         # client.publish("data",result)
     
     # if msg.topic[0:10] == 'visualizer':
