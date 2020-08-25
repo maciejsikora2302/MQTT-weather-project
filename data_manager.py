@@ -23,27 +23,27 @@ def sth():
             print(type(word),type(row))
 
 def search_equal(type, value):
-    result = str(db.search(query[type] == value))
-    if(len(result)) < 5:
-        return ""
+    result = db.search(query[type] == value)
+    if(len(str(result))) < 5:
+        return None
     return result
 
 def search_greater(type, value):
-    result = str(db.search(query[type] > value))
-    if(len(result)) < 5:
-        return ""
+    result = db.search(query[type] > value)
+    if(len(str(result))) < 5:
+        return None
     return result
 
 def search_lower(type, value):
-    result = str(db.search(query[type] < value))
-    if(len(result)) < 5:
-        return ""
+    result = db.search(query[type] < value)
+    if(len(str(result))) < 5:
+        return None
     return result
 
 def search_in_range(type, lower, higher):
-    result = str(db.search((lower <= query[type]) & (query[type] <= higher)))
-    if(len(result)) < 5:
-        return ""
+    result = db.search((lower <= query[type]) & (query[type] <= higher))
+    if(len(str(result))) < 5:
+        return None
     return result
 
 def on_connect(client, userdata, flags, rc):
@@ -70,6 +70,7 @@ def status_finished():
     status_file = open("status.txt","w")
     status_file.write("ready")
     status_file.close()
+    print("data ready")
 
 def on_messege(client, userdata, msg):
     decoded = msg.payload.decode("utf-8")
@@ -86,7 +87,7 @@ def on_messege(client, userdata, msg):
 
     if msg.topic == 'gui_request/rain':
         result = get_result(decoded)
-
+        
         result_file = open("result_file.csv","w")
         for row in result:
             result_file.write('"'+row["date"]+'",'+str(row["rain"])+"\n")
@@ -94,35 +95,35 @@ def on_messege(client, userdata, msg):
 
         status_finished()
 
-    if msg.topic == 'gui_request/temp':
-        result = get_result(decoded)
+    # if msg.topic == 'gui_request/temp':
+    #     result = get_result(decoded)
 
-        result_file = open("result_file.csv","w")
-        for row in result:
-            result_file.write('"'+row["date"]+'",'+str(row["temp"])+"\n")
-        result_file.close()
+    #     result_file = open("result_file.csv","w")
+    #     for row in result:
+    #         result_file.write('"'+row["date"]+'",'+str(row["temp"])+"\n")
+    #     result_file.close()
 
-        status_finished()
+    #     status_finished()
 
-    if msg.topic == 'gui_request/press':
-        result = get_result(decoded)
+    # if msg.topic == 'gui_request/press':
+    #     result = get_result(decoded)
 
-        result_file = open("result_file.csv","w")
-        for row in result:
-            result_file.write('"'+row["date"]+'",'+str(row["press"])+"\n")
-        result_file.close()
+    #     result_file = open("result_file.csv","w")
+    #     for row in result:
+    #         result_file.write('"'+row["date"]+'",'+str(row["press"])+"\n")
+    #     result_file.close()
 
-        status_finished()
+    #     status_finished()
 
-    if msg.topic == 'gui_request/wind':
-        result = get_result(decoded)
+    # if msg.topic == 'gui_request/wind':
+    #     result = get_result(decoded)
 
-        result_file = open("result_file.csv","w")
-        for row in result:
-            result_file.write('"'+row["date"]+'",'+str(row["wind"])+"\n")
-        result_file.close()
+    #     result_file = open("result_file.csv","w")
+    #     for row in result:
+    #         result_file.write('"'+row["date"]+'",'+str(row["wind"])+"\n")
+    #     result_file.close()
 
-        status_finished()
+    #     status_finished()
 
         # client.publish("data",result)
     
