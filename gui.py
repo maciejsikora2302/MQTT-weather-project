@@ -12,11 +12,10 @@ def get_datatype_and_dates(gui):
     else:
         raise ValueError
 
-    # TODO zapewnić poprawność dat
     #format rrrr-mm-dd
-    
+
     separator = "-"
-    
+
     start_date = ""
     start_date += gui.Year1 + separator
     start_date += gui.Month1 + separator
