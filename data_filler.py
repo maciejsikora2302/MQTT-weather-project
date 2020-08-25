@@ -58,7 +58,11 @@ def get_lower_info(type, condition):
 def get_middle_info(type, lower, higher):
     print(f"MIDDLE Type {type}, lower {lower} ,higher {higher}")
     result = db.search((lower <= query[type]) & (query[type] <= higher))
-    print(result)
+    # print(result)
+    result_file = open("result_file.txt","w")
+    for row in result:
+        result_file.write(str(row)+"\n")
+    result_file.close()
 
 def run_all():
 

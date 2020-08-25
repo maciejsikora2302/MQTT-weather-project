@@ -71,8 +71,11 @@ def on_messege(client, userdata, msg):
         lower = decoded[0:10]
         higher = decoded[11:21]
         result = search_in_range("date",lower,higher)
-        print(result)
-        client.publish("data",result)
+        result_file = open("result_file.txt","w")
+        for row in result:
+            result_file.write(str(row)+"\n")
+        result_file.close()
+        # client.publish("data",result)
     
     # if msg.topic[0:10] == 'visualizer':
     #     if msg.topic[11:15] == 'day':
