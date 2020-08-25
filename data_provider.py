@@ -1,5 +1,4 @@
 #mqtt client import
-import weather_api
 import paho.mqtt.client as mqtt
 import time
 import json

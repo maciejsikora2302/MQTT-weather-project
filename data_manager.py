@@ -62,6 +62,7 @@ def get_result(decoded):
 
     lower = decoded[0:10]
     higher = decoded[11:21]
+    print(f"lower: {lower}, higher: {higher}")
     result = search_in_range("date",lower,higher)
     return result
 
@@ -163,6 +164,8 @@ client.connect(brooker)
 
 for dataType in subTypes:
     client.subscribe(f"krakow/{dataType}")
+    if not (dataType == "fillDatabase"):
+        client.subscribe(f"gui_request/{dataType}")
 
 client.subscribe("requestdata")
 
