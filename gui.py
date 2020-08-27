@@ -50,7 +50,24 @@ def get_datatype_and_dates(gui):
 
     #format rrrr-mm-dd
 
+    int(gui.Day1)
+    int(gui.Month1)
+    int(gui.Year1)
 
+    int(gui.Day2)
+    int(gui.Month2)
+    int(gui.Year2)
+
+    try:
+
+        d1 = dt.datetime(int(gui.Year1), int(gui.Month1), int(gui.Day1))
+        d2 = dt.datetime(int(gui.Year2), int(gui.Month2), int(gui.Day2))
+        if d2 < d1:
+            error = Gui(["Data końcowa jest przed datą początkową"])
+            error.run()
+    except ValueError:
+        error = Gui(["Jedna z dat jest błędna"])
+        error.run()
 
     separator = "-"
 
@@ -60,17 +77,17 @@ def get_datatype_and_dates(gui):
         result_date += year + separator
 
         tmp = ""
-        if month in "123456789":
+        if month in "123456789" and month != "12":
             tmp += "0" + month
         else:
             tmp = month
         result_date += tmp + separator
 
         tmp = ""
-        if day in "123456789":
+        if day in "123456789" and day != "12" and day != "23":
             tmp += "0" + day
         else:
-            tmp = month
+            tmp = day
         result_date += tmp
 
         return result_date
@@ -78,16 +95,6 @@ def get_datatype_and_dates(gui):
     start_date = create_date(gui.Day1, gui.Month1, gui.Year1, separator)
     end_date = create_date(gui.Day2, gui.Month2, gui.Year2, separator)
 
-    try:
-        d1 = dt.datetime(int(gui.Year1), int(gui.Month1), int(gui.Day1))
-        d2 = dt.datetime(int(gui.Year2), int(gui.Month2), int(gui.Day2))
-
-        if d2 < d1:
-            error = Gui(["Data końcowa jest przed datą początkową"])
-            error.run()
-    except ValueError:
-        error = Gui(["Jedna z dat jest błędna"])
-        error.run()
 
     # print(data_type, start_date, end_date)
     # print("Connecting to MQTT brooker")
@@ -128,9 +135,7 @@ def get_datatype_and_dates(gui):
     res_file.close()
 
     plot = Gui(
-        [M('plot', width=10, height=10), ___],
-        [III, III],
-        [_, _]
+        [M('plot', width=10, height=10)]
                )
 
     def replot(gui):
@@ -164,21 +169,21 @@ gui = Gui(
 )
 
 
-# gui.Day1 = "Dzień"
-# gui.Month1 = "Miesiąc"
-# gui.Year1 = "Rok"
+gui.Day1 = "Dzień"
+gui.Month1 = "Miesiąc"
+gui.Year1 = "Rok"
+
+gui.Day2 = "Dzień"
+gui.Month2 = "Miesiąc"
+gui.Year2 = "Rok"
 #
-# gui.Day2 = "Dzień"
-# gui.Month2 = "Miesiąc"
-# gui.Year2 = "Rok"
-
-gui.Day1 = "2"
-gui.Month1 = "2"
-gui.Year1 = "2020"
-
-gui.Day2 = "8"
-gui.Month2 = "2"
-gui.Year2 = "2020"
+# gui.Day1 = "2"
+# gui.Month1 = "2"
+# gui.Year1 = "2020"
+#
+# gui.Day2 = "8"
+# gui.Month2 = "2"
+# gui.Year2 = "2020"
 
 
 
