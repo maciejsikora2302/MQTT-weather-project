@@ -1,8 +1,12 @@
-from guietta import Gui, _, R1, ___
+from guietta import Gui, _, R1, ___, M, Ax, III
 import paho.mqtt.client as mqtt
 import datetime as dt
 from time import sleep
+import matplotlib.pyplot as plt
+import numpy as np
 
+request_ready = False
+suback = False
 
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
@@ -15,6 +19,11 @@ def on_log(client, userdata, level, buf):
 def on_messege(client, userdata, msg):
     decoded = msg.payload.decode("utf-8")
     print(f"Message I received -> Topic: {msg.topic}, Message: {decoded}")
+
+    global request_ready
+
+    if msg.topic == "request_status" and decoded == "done":
+        request_ready = True
 
 def is_request_ready():
     status_file = open("status.txt", "r")
@@ -91,17 +100,56 @@ def get_datatype_and_dates(gui):
     client.on_message = on_messege
 
     client.connect(brooker)
+    client.subscribe("request_status")
 
-    client.loop_start()
-    client.publish(data_type, start_date + " " + end_date)
-    client.loop_stop()
-    while not is_request_ready():
-        print("Waiting for request to be ready...")
-        sleep(0.5)
-    print(open("result_file.csv", "r").readlines())
+    try:
+        client.loop_start()
+
+        global request_ready
+        request_ready = False
+
+        client.publish(data_type, start_date + " " + end_date)
+        while not request_ready:
+            print("Waiting for request to be ready...")
+            sleep(0.1)
+    finally:
+        client.loop_stop()
+
     res_file = open("result_file.csv", "r")
+
+    data = []
+    value = []
+
     for line in res_file.readlines():
-        print(line.strip(","))
+        l = line.strip("\n").split(",")
+        data.append(l[0])
+        value.append(float(l[1]))
+
+    res_file.close()
+
+    plot = Gui(
+        [M('plot', width=10, height=10), ___],
+        [III, III],
+        [_, _]
+               )
+
+    def replot(gui):
+        with Ax(gui.plot) as ax:
+            ax.set_title('Data visualiser')
+            ax.plot(data, value, ".-")
+            plt.setp(ax.get_xticklabels(), rotation=45)
+            ax.set_autoscale_on(True)
+            # ax.set_xtickslabels(data, rotation="vertical")
+
+
+
+    replot(plot)
+    plot.run()
+
+
+
+
+
 
 
 

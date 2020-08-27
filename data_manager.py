@@ -1,5 +1,5 @@
 import paho.mqtt.client as mqtt
-import time
+# from time import sleep
 from tinydb import TinyDB, Query
 import json
 import ast
@@ -56,9 +56,9 @@ def on_log(client, userdata, level, buf):
     print("Log: ", buf)
 
 def get_result(decoded):
-    status_file = open("status.txt","w")
-    status_file.write("filling")
-    status_file.close()
+    # status_file = open("status.txt","w")
+    # status_file.write("filling")
+    # status_file.close()
 
     lower = decoded[0:10]
     higher = decoded[11:21]
@@ -67,9 +67,19 @@ def get_result(decoded):
     return result
 
 def status_finished():
-    status_file = open("status.txt","w")
-    status_file.write("ready")
-    status_file.close()
+    brooker = "127.0.0.1"
+    client = mqtt.Client("Status_changer")
+
+    client.on_log = on_log
+    client.on_connect = on_connect
+
+    client.connect(brooker)
+    client.loop_stop()
+    client.publish("request_status", "done")
+    client.loop_stop()
+    # status_file = open("status.txt","w")
+    # status_file.write("ready")
+    # status_file.close()
     print("data ready")
 
 def on_messege(client, userdata, msg):
@@ -90,7 +100,7 @@ def on_messege(client, userdata, msg):
         
         result_file = open("result_file.csv","w")
         for row in result:
-            result_file.write('"'+row["date"]+'",'+str(row["rain"])+"\n")
+            result_file.write(+row["date"]+','+str(row["rain"])+"\n")
         result_file.close()
 
         status_finished()
@@ -100,7 +110,7 @@ def on_messege(client, userdata, msg):
 
         result_file = open("result_file.csv","w")
         for row in result:
-            result_file.write('"'+row["date"]+'",'+str(row["temp"])+"\n")
+            result_file.write(row["date"]+','+str(row["temp"])+"\n")
         result_file.close()
 
         status_finished()
@@ -110,7 +120,7 @@ def on_messege(client, userdata, msg):
 
         result_file = open("result_file.csv","w")
         for row in result:
-            result_file.write('"'+row["date"]+'",'+str(row["press"])+"\n")
+            result_file.write(row["date"]+','+str(row["press"])+"\n")
         result_file.close()
 
         status_finished()
@@ -120,7 +130,7 @@ def on_messege(client, userdata, msg):
 
         result_file = open("result_file.csv","w")
         for row in result:
-            result_file.write('"'+row["date"]+'",'+str(row["wind"])+"\n")
+            result_file.write(row["date"]+','+str(row["wind"])+"\n")
         result_file.close()
 
         status_finished()
