@@ -18,15 +18,13 @@ def on_messege(client, userdata, msg):
 
 def is_request_ready():
     status_file = open("status.txt", "r")
-    print(f"File contains: {status_file.readlines()}")
-    if status_file.readline() == "filling":
-        return False
-    elif status_file.readline() == "ready":
+    file_content = status_file.read()
+    if file_content == "ready":
         status_file.close()
         open("status.txt", "w").close()
         return True
     else:
-        print(status_file.readlines())
+        return False
 
 def get_datatype_and_dates(gui):
     data_type = "gui_request/"
@@ -82,8 +80,8 @@ def get_datatype_and_dates(gui):
         error = Gui(["Jedna z dat jest błędna"])
         error.run()
 
-    print(data_type, start_date, end_date)
-    print("Connecting to MQTT brooker")
+    # print(data_type, start_date, end_date)
+    # print("Connecting to MQTT brooker")
 
     brooker = "127.0.0.1"
     client = mqtt.Client("gui")
@@ -97,10 +95,13 @@ def get_datatype_and_dates(gui):
     client.loop_start()
     client.publish(data_type, start_date + " " + end_date)
     client.loop_stop()
-    # while not is_request_ready():
-    #     print("Waiting for request to be ready...")
-    #     sleep(0.3)
-    # print(open("result_file.csv", "r").readlines())
+    while not is_request_ready():
+        print("Waiting for request to be ready...")
+        sleep(0.5)
+    print(open("result_file.csv", "r").readlines())
+    res_file = open("result_file.csv", "r")
+    for line in res_file.readlines():
+        print(line.strip(","))
 
 
 
@@ -115,13 +116,22 @@ gui = Gui(
 )
 
 
-gui.Day1 = "Dzień"
-gui.Month1 = "Miesiąc"
-gui.Year1 = "Rok"
+# gui.Day1 = "Dzień"
+# gui.Month1 = "Miesiąc"
+# gui.Year1 = "Rok"
+#
+# gui.Day2 = "Dzień"
+# gui.Month2 = "Miesiąc"
+# gui.Year2 = "Rok"
 
-gui.Day2 = "Dzień"
-gui.Month2 = "Miesiąc"
-gui.Year2 = "Rok"
+gui.Day1 = "2"
+gui.Month1 = "2"
+gui.Year1 = "2020"
+
+gui.Day2 = "8"
+gui.Month2 = "2"
+gui.Year2 = "2020"
+
 
 
 gui.Zwizualizuj = get_datatype_and_dates

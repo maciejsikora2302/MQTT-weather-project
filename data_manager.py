@@ -95,35 +95,35 @@ def on_messege(client, userdata, msg):
 
         status_finished()
 
-    # if msg.topic == 'gui_request/temp':
-    #     result = get_result(decoded)
+    if msg.topic == 'gui_request/temp':
+        result = get_result(decoded)
 
-    #     result_file = open("result_file.csv","w")
-    #     for row in result:
-    #         result_file.write('"'+row["date"]+'",'+str(row["temp"])+"\n")
-    #     result_file.close()
+        result_file = open("result_file.csv","w")
+        for row in result:
+            result_file.write('"'+row["date"]+'",'+str(row["temp"])+"\n")
+        result_file.close()
 
-    #     status_finished()
+        status_finished()
 
-    # if msg.topic == 'gui_request/press':
-    #     result = get_result(decoded)
+    if msg.topic == 'gui_request/press':
+        result = get_result(decoded)
 
-    #     result_file = open("result_file.csv","w")
-    #     for row in result:
-    #         result_file.write('"'+row["date"]+'",'+str(row["press"])+"\n")
-    #     result_file.close()
+        result_file = open("result_file.csv","w")
+        for row in result:
+            result_file.write('"'+row["date"]+'",'+str(row["press"])+"\n")
+        result_file.close()
 
-    #     status_finished()
+        status_finished()
 
-    # if msg.topic == 'gui_request/wind':
-    #     result = get_result(decoded)
+    if msg.topic == 'gui_request/wind':
+        result = get_result(decoded)
 
-    #     result_file = open("result_file.csv","w")
-    #     for row in result:
-    #         result_file.write('"'+row["date"]+'",'+str(row["wind"])+"\n")
-    #     result_file.close()
+        result_file = open("result_file.csv","w")
+        for row in result:
+            result_file.write('"'+row["date"]+'",'+str(row["wind"])+"\n")
+        result_file.close()
 
-    #     status_finished()
+        status_finished()
 
         # client.publish("data",result)
     
