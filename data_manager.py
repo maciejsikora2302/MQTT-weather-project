@@ -28,18 +28,6 @@ def search_equal(type, value):
         return None
     return result
 
-def search_greater(type, value):
-    result = db.search(query[type] > value)
-    if(len(str(result))) < 5:
-        return None
-    return result
-
-def search_lower(type, value):
-    result = db.search(query[type] < value)
-    if(len(str(result))) < 5:
-        return None
-    return result
-
 def search_in_range(type, lower, higher):
     result = db.search((lower <= query[type]) & (query[type] <= higher))
     if(len(str(result))) < 5:
@@ -56,9 +44,6 @@ def on_log(client, userdata, level, buf):
     print("Log: ", buf)
 
 def get_result(decoded):
-    # status_file = open("status.txt","w")
-    # status_file.write("filling")
-    # status_file.close()
 
     lower = decoded[0:10]
     higher = decoded[11:21]
@@ -77,9 +62,7 @@ def status_finished():
     client.loop_stop()
     client.publish("request_status", "done")
     client.loop_stop()
-    # status_file = open("status.txt","w")
-    # status_file.write("ready")
-    # status_file.close()
+
     print("data ready")
 
 def on_messege(client, userdata, msg):
@@ -134,31 +117,6 @@ def on_messege(client, userdata, msg):
         result_file.close()
 
         status_finished()
-
-        # client.publish("data",result)
-    
-    # if msg.topic[0:10] == 'visualizer':
-    #     if msg.topic[11:15] == 'day':
-    #         day = decoded
-    #         print(day)
-
-    #     elif msg.topic[11:16] == 'week':
-    #         lower = decoded[0:10]
-    #         higher = decoded[11:21]
-    #         result = search_in_range("date",lower,higher)
-    #         print(result)
-            
-    #     elif msg.topic[11:17] == 'month':
-    #         lower = decoded[0:10]
-    #         higher = decoded[11:21]
-    #         result = search_in_range("date",lower,higher)
-    #         print(result)
-
-    #     elif msg.topic[11:16] == 'year':
-    #         lower = decoded[0:10]
-    #         higher = decoded[11:21]
-    #         result = search_in_range("date",lower,higher)
-    #         print(result)
 
 brooker = "127.0.0.1"
 client = mqtt.Client("data_manager")
