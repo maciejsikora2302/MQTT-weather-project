@@ -24,44 +24,7 @@ def fill(filename):
                 if not db.contains((query.date == newDict.get("date")) & (query.hour == newDict.get("hour"))):
                     db.insert(newDict)
 
-
 filenames = ['s_d_t_01_2020.csv','s_d_t_02_2020.csv','s_d_t_03_2020.csv','s_d_t_04_2020.csv','s_d_t_05_2020.csv','s_d_t_06_2020.csv','s_d_t_07_2020.csv']
 
 # for filename in filenames:
 #     fill(filename)
-
-def get_middle_info(type, lower, higher):
-    print(f"MIDDLE Type {type}, lower {lower} ,higher {higher}")
-    result = db.search((lower <= query[type]) & (query[type] <= higher))
-    return result
-
-def get_result(decoded):
-    status_file = open("status.txt","w")
-    status_file.write("filling")
-    status_file.close()
-
-    lower = decoded[0:10]
-    higher = decoded[11:21]
-    print(lower+"\n")
-    print(higher+"\n\n\n")
-    result = get_middle_info("date",lower,higher)
-    return result
-
-def status_finished():
-    status_file = open("status.txt","w")
-    status_file.write("ready")
-    status_file.close()
-
-
-
-def run_all():
-    result = get_result("2020-07-12 2020-07-22")
-
-    result_file = open("result_file.csv","w")
-    for row in result:
-        result_file.write('"'+row["date"]+'",'+str(row["rain"])+','+str(row["wind"])+','+str(row["temp"])+','+str(row["press"])+"\n")
-    result_file.close()
-
-    status_finished()
-
-run_all()
