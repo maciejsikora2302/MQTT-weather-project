@@ -7,6 +7,7 @@ import numpy as np
 
 request_ready = False
 suback = False
+visualizer_title = ""
 
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
@@ -37,13 +38,18 @@ def is_request_ready():
 
 def get_datatype_and_dates(gui):
     data_type = "gui_request/"
+    global visualizer_title
     if gui.Deszcz.isChecked():
+        visualizer_title = "Rain"
         data_type += "rain"
     elif gui.Temperatura.isChecked():
+        visualizer_title = "Temperature"
         data_type += "temp"
     elif gui.Wiatr.isChecked():
+        visualizer_title = "Wind"
         data_type += "wind"
     elif gui.Cisnienie.isChecked():
+        visualizer_title = "Pressure"
         data_type += "press"
     else:
         raise ValueError
@@ -140,7 +146,8 @@ def get_datatype_and_dates(gui):
 
     def replot(gui):
         with Ax(gui.plot) as ax:
-            ax.set_title('Data visualiser')
+            global visualizer_title
+            ax.set_title(visualizer_title) #'Data visualiser'
             ax.plot(data, value, ".-")
             plt.setp(ax.get_xticklabels(), rotation=45)
             ax.set_autoscale_on(True)
