@@ -2,10 +2,12 @@
 Project for Pyhon programming involving MQTT communication and displaying weather conditions
 
 # Instalacja wymaganych bibliotek
-pip install paho-mqtt \
-pip install pandas \
-pip install guietta \
+```shell script
+pip install paho-mqtt 
+pip install pandas 
+pip install guietta 
 pip install tinydb
+```
 
 # Uruchomienie
 Przeprowadzenie symulacji wymaga uprzedniego uruchomienia brokera MQTT zawartego w plikach projektu. \
