@@ -3,11 +3,15 @@ Projekt na zajęcia z programowania w języku Pythoin, polegojący na wykorzysta
 
 # Instalacja wymaganych bibliotek
 ```shell script
+pip install numpy
+pip install matplotlib
+pip install requests
 pip install paho-mqtt 
 pip install pandas 
 pip install guietta 
 pip install tinydb
 ```
+Konkretne wersje znajdują się w pliku "requirements.txt", ale na moment tworzenia projektu są to po prostu najnowsze dostępne wersje powyższych bibliotek.
 
 # Uruchomienie
 Przeprowadzenie symulacji wymaga uprzedniego uruchomienia brokera MQTT zawartego w plikach projektu. \

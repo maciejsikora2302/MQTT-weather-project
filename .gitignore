@@ -3,3 +3,4 @@ weather_api.py
 visualizer.py
 result_file.txt
 result_file.csv
+__pycache__
