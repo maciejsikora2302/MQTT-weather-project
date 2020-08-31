@@ -13,6 +13,11 @@ pip install tinydb
 ```
 Konkretne wersje znajdują się w pliku "requirements.txt", ale na moment tworzenia projektu są to po prostu najnowsze dostępne wersje powyższych bibliotek.
 
+Ponadto poniższą komendą powinno dać się zainstalować wszystkie wymagane biblioteki. 
+```shell script
+pip install -r requirements.txt
+```
+
 # Uruchomienie
 Przeprowadzenie symulacji wymaga uprzedniego uruchomienia brokera MQTT zawartego w plikach projektu. \
 Następnym krokiem jest uruchomienie w osobnych terminalach data_manager.py oraz gui.py, między którymi to odbywa się komunikacja z wykorzystaniem brokera. \
