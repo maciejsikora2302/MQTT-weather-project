@@ -1,4 +1,3 @@
-#mqtt client import
 import paho.mqtt.client as mqtt
 import time
 import json
@@ -35,21 +34,8 @@ try:
     while True:
         client.loop_start()
         record = get_json_from_imgw()
-        # date = record["data_pomiaru"] + " " + record["godzina_pomiaru"]
-        # msg = date + record["temperatura"]
-        # print(msg)
-        # client.publish("krakow/temp", msg)
-        # msg = date + record["predkosc_wiatru"]
-        # print(msg)
-        # client.publish("krakow/wind", msg)
-        # msg = date + record["cisnienie"]
-        # print(msg)
-        # client.publish("krakow/press", msg)
-        # msg = date + record["suma_opadu"]
-        # print(msg)
-        # client.publish("krakow/rain", msg)
 
-        # wiadomość dla bazy - nie chciałem usuwać tego co napisałeś wcześniej
+        # wiadomość dla bazy
         # format np: "{"date": "2020-05-15", "hour": 14, "temp": 8.6, "wind": 3, "press": 1016.4, "rain": 1.4}"
 
         msg = "{'date': '" + record["data_pomiaru"]
