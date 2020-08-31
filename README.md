@@ -1,5 +1,5 @@
 # MQTT-weather-project
-Project for Pyhon programming involving MQTT communication and displaying weather conditions
+Projekt na zajęcia z programowania w języku Pythoin, polegojący na wykorzystaniu brookera MQTT do komunikacji między procesowej i operowaniu na bazie danych zawierających zapisy pogodowe.
 
 # Instalacja wymaganych bibliotek
 ```shell script
